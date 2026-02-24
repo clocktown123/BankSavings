@@ -1,0 +1,61 @@
+import java.util.Scanner;
+
+public class BankDriver {
+    public static void main(String[] args) {
+        Scanner stdIn = new Scanner(System.in);
+
+        String quit = "";
+
+        while (!quit.equalsIgnoreCase("q")) {
+
+            double totalDeposits = 0;
+            double totalWithdrawals = 0;
+            double totalInterest = 0;
+
+            System.out.print("Enter account number: ");
+            int accountNumber = stdIn.nextInt();
+
+            System.out.print("Enter starting balance: ");
+            double startingBalance = stdIn.nextDouble();
+
+            System.out.println("The annual interest rate is 2% (a 0.02 times multiplier)");
+
+            System.out.print("Enter number of months: ");
+            int months = stdIn.nextInt();
+
+            SavingsAccount account = new SavingsAccount(accountNumber, startingBalance);
+
+            for (int i = 1; i <= months; i++) {
+
+                System.out.println("\nMonth " + i);
+
+                System.out.print("Enter deposit amount: ");
+                double deposit = stdIn.nextDouble();
+                account.deposit(deposit);
+                totalDeposits += deposit;
+
+                System.out.print("Enter withdrawal amount: ");
+                double withdrawal = stdIn.nextDouble();
+                account.withdraw(withdrawal);
+                totalWithdrawals += withdrawal;
+
+                double interest = account.calculateMonthlyInterest();
+                account.addMonthlyInterest();
+                totalInterest += interest;
+            }
+
+            System.out.println("\n----- Account Summary -----");
+            System.out.printf("Final Balance: $%.2f%n", account.balance);
+            System.out.printf("Total Deposits: $%.2f%n", totalDeposits);
+            System.out.printf("Total Withdrawals: $%.2f%n", totalWithdrawals);
+            System.out.printf("Total Interest Earned: $%.2f%n", totalInterest);
+
+            stdIn.nextLine();
+
+            System.out.printf("Press q to quit or any other key to continue.%n");
+            quit = stdIn.nextLine();
+
+        }
+        stdIn.close();
+    }
+}
