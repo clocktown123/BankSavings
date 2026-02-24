@@ -1,0 +1,18 @@
+public class SavingsAccount extends BankAccount {
+
+    private final double INTEREST_RATE = 0.02;
+
+    public SavingsAccount(int accountNumber, double balance) {
+        super(accountNumber, balance);
+    }
+
+    public double calculateMonthlyInterest(){
+        return (INTEREST_RATE/12) * balance;
+    }
+
+    public void addMonthlyInterest(){
+        double interest = calculateMonthlyInterest();
+        deposit(interest);
+    }
+
+}
